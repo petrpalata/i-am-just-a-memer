@@ -12,18 +12,15 @@ enum MemeGeneratorError: Error {
     case invalidUrl
     case invalidImage
     case invalidResponseType
+    case invalidParameters
 }
 
 class MemeGeneratorApiClient {
-    let memeUrl = URL(string: "https://apimeme.com/meme?meme=10-Guy")
+    let baseUrl = URLComponents(string: "https://apimeme.com/meme")
     
     func generateMeme(_ topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
-        guard let memeUrl = self.memeUrl else {
-            throw MemeGeneratorError.invalidUrl
-        }
-        
         let session = URLSession.shared
-        let memeRequest = URLRequest(url: memeUrl)
+        let memeRequest = try requestFromParams("", topText: topText, bottomText: bottomText)
         let response = try await session.data(for: memeRequest, delegate: nil)
         let meme = UIImage(data: response.0)
         guard let meme = meme else {
@@ -35,5 +32,25 @@ class MemeGeneratorApiClient {
         }
         
         return (meme, httpResponse)
+    }
+    
+    private func requestFromParams(_ memeName: String,
+                                   topText: String,
+                                   bottomText: String) throws -> URLRequest {
+        guard var baseUrl = self.baseUrl else {
+            throw MemeGeneratorError.invalidUrl
+        }
+        
+        let queryParameters = [
+            URLQueryItem(name: "meme", value: "1990s-First-World-Problems"),
+            URLQueryItem(name: "top", value: topText),
+            URLQueryItem(name: "bottom", value: bottomText)
+        ]
+        baseUrl.queryItems = queryParameters
+        guard let urlFromComponents = baseUrl.url else {
+            throw MemeGeneratorError.invalidParameters
+        }
+        
+        return URLRequest(url: urlFromComponents)
     }
 }
