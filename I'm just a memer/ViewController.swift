@@ -9,23 +9,37 @@ import UIKit
 
 class ViewController: UIViewController {
     @IBOutlet weak var memeImageView: UIImageView?
+    @IBOutlet weak var topTextField: UITextField?
+    @IBOutlet weak var bottomTextField: UITextField?
+    @IBOutlet weak var apiFetchIndicator: UIActivityIndicatorView?
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        let apiClient = MemeGeneratorApiClient()
+    let apiClient = MemeGeneratorApiClient()
+
+    @IBAction func generateMemePressed() {
+        let topText = topTextField?.text ?? ""
+        let bottomText = bottomTextField?.text ?? ""
+        
+        toggleLoading()
+        
         async {
-            let apiResponse = try? await apiClient.generateMeme("Test", bottomText: "Test")
+            let apiResponse = try? await apiClient.generateMeme(topText, bottomText: bottomText)
             guard let apiResponse = apiResponse else {
                 print("An error occured during generateMeme call")
+                toggleLoading()
                 return
             }
+            
             let httpStatusCode = apiResponse.response.statusCode
             print("API Response: \(apiResponse), status: \(httpStatusCode)")
-            self.memeImageView?.image = apiResponse.data
+            
+            memeImageView?.image = apiResponse.data
+            toggleLoading()
         }
     }
     
-    
+    private func toggleLoading() {
+        apiFetchIndicator?.isHidden.toggle()
+        memeImageView?.isHidden.toggle()
+    }
 }
 
