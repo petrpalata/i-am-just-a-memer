@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 
 class MemeGeneratorViewController: UIViewController {
     @IBOutlet weak var memeImageView: UIImageView?
@@ -35,6 +36,11 @@ class MemeGeneratorViewController: UIViewController {
             memeImageView?.image = apiResponse.data
             toggleLoading()
         }
+    }
+    
+    @IBAction func pickAMemePressed() {
+        let hostingViewController = UIHostingController(rootView: MemeTypePickerView())
+        present(hostingViewController, animated: true)
     }
     
     private func toggleLoading() {
