@@ -60,14 +60,22 @@
                                     <action selector="pickAMemePressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="dfu-zd-yTT"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No Meme Selected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gRh-fh-sXo">
+                                <rect key="frame" x="134.5" y="349" width="145" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="VeX-Pw-Szk" firstAttribute="top" secondItem="Jk1-9N-IuN" secondAttribute="bottom" constant="29" id="4Ce-8i-xL5"/>
+                            <constraint firstItem="gRh-fh-sXo" firstAttribute="top" secondItem="yCR-TP-zlD" secondAttribute="bottom" constant="22" id="4PV-bf-M28"/>
                             <constraint firstItem="HDx-Yv-zep" firstAttribute="top" secondItem="tCr-Xy-Jeb" secondAttribute="bottom" constant="48" id="92m-lQ-1ZC"/>
                             <constraint firstItem="tCr-Xy-Jeb" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Axq-0L-LVb"/>
                             <constraint firstItem="yCR-TP-zlD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="GUd-kg-VFD"/>
+                            <constraint firstItem="tCr-Xy-Jeb" firstAttribute="top" secondItem="gRh-fh-sXo" secondAttribute="bottom" constant="24" id="H5w-AP-UE9"/>
                             <constraint firstItem="yCR-TP-zlD" firstAttribute="top" secondItem="EKG-vb-M1q" secondAttribute="bottom" constant="48" id="Qkh-yP-cRi"/>
                             <constraint firstItem="tzk-mz-qLR" firstAttribute="centerX" secondItem="tCr-Xy-Jeb" secondAttribute="centerX" id="QyD-W8-0Ub"/>
                             <constraint firstItem="CgF-VF-jAu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="52" id="Syp-c1-5Mi"/>
@@ -76,8 +84,8 @@
                             <constraint firstItem="tzk-mz-qLR" firstAttribute="centerY" secondItem="tCr-Xy-Jeb" secondAttribute="centerY" id="W76-1P-a1m"/>
                             <constraint firstItem="HDx-Yv-zep" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="YbD-GD-fpM"/>
                             <constraint firstItem="CgF-VF-jAu" firstAttribute="trailing" secondItem="Jk1-9N-IuN" secondAttribute="trailing" id="Z4b-bw-OIa"/>
+                            <constraint firstItem="gRh-fh-sXo" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="a9d-Ee-znG"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Jk1-9N-IuN" secondAttribute="trailing" constant="51" id="bag-YP-nxt"/>
-                            <constraint firstItem="tCr-Xy-Jeb" firstAttribute="top" secondItem="yCR-TP-zlD" secondAttribute="bottom" constant="67" id="ccj-Ok-XAK"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="tCr-Xy-Jeb" secondAttribute="trailing" id="d7K-u9-MHP"/>
                             <constraint firstItem="CgF-VF-jAu" firstAttribute="leading" secondItem="Jk1-9N-IuN" secondAttribute="leading" id="dqf-2q-N4A"/>
                             <constraint firstItem="Jk1-9N-IuN" firstAttribute="top" secondItem="CgF-VF-jAu" secondAttribute="bottom" constant="8" symbolic="YES" id="fAq-4p-uAq"/>
@@ -92,6 +100,7 @@
                         <outlet property="apiFetchIndicator" destination="tzk-mz-qLR" id="zvP-Hs-R3Q"/>
                         <outlet property="bottomTextField" destination="EKG-vb-M1q" id="j0S-ZB-bvs"/>
                         <outlet property="memeImageView" destination="tCr-Xy-Jeb" id="lfy-eK-VLP"/>
+                        <outlet property="selectedMemeLabel" destination="gRh-fh-sXo" id="SF1-Mp-olH"/>
                         <outlet property="topTextField" destination="Jk1-9N-IuN" id="Tll-p8-Ekg"/>
                     </connections>
                 </viewController>
