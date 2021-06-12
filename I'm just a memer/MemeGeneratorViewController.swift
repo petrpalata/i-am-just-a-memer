@@ -15,7 +15,7 @@ class MemeGeneratorViewController: UIViewController {
     @IBOutlet weak var apiFetchIndicator: UIActivityIndicatorView?
     @IBOutlet weak var selectedMemeLabel: UILabel?
 
-    let apiClient = MemeGeneratorApiClient()
+    let apiClient: MemeGeneratorApiClientProtocol = MemeGeneratorApiClient()
     
     var selectedMeme: Meme?
     

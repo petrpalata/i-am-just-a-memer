@@ -8,6 +8,16 @@
 import Foundation
 import UIKit
 
+protocol MemeGeneratorApiClientProtocol {
+   func generateMeme(_ imageUrl: URL,
+                      topText: String,
+                      bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse)
+    
+    func generateMeme(_ topText: String,
+                      bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse)
+}
+
+
 enum MemeGeneratorError: Error {
     case invalidUrl
     case invalidImage
@@ -18,33 +28,22 @@ enum MemeGeneratorError: Error {
 class MemeGeneratorApiClient {
     let baseUrl = URLComponents(string: "https://apimeme.com/meme")
     
-    func generateMeme(_ memeName: String, topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
+    private func generateMeme(_ memeName: String, topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
         let session = URLSession.shared
-            let memeRequest = try requestFromParams(memeName, topText: topText, bottomText: bottomText)
-            let response = try await session.data(for: memeRequest, delegate: nil)
-            let meme = UIImage(data: response.0)
-            guard let meme = meme else {
-                throw MemeGeneratorError.invalidImage
-            }
-            
-            guard let httpResponse = response.1 as? HTTPURLResponse else {
-                throw MemeGeneratorError.invalidResponseType
-            }
-            
-            return (meme, httpResponse)
-    }
-    
-    func generateMeme(_ imageUrl: URL, topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
-        if let memeName = getMemeNameFromImageUrl(imageUrl) {
-            return try await generateMeme(memeName, topText: topText, bottomText: bottomText)
-        } else {
-            return try await generateMeme(topText, bottomText: bottomText)
+        let memeRequest = try requestFromParams(memeName, topText: topText, bottomText: bottomText)
+        let response = try await session.data(for: memeRequest, delegate: nil)
+        let meme = UIImage(data: response.0)
+        guard let meme = meme else {
+            throw MemeGeneratorError.invalidImage
         }
+        
+        guard let httpResponse = response.1 as? HTTPURLResponse else {
+            throw MemeGeneratorError.invalidResponseType
+        }
+        
+        return (meme, httpResponse)
     }
-    
-    func generateMeme(_ topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
-        return try await generateMeme("1990s-First-World-Problems", topText: topText, bottomText: bottomText)
-    }
+        
     
     private func requestFromParams(_ memeName: String,
                                    topText: String,
@@ -73,5 +72,20 @@ class MemeGeneratorApiClient {
             return memeName
         }
         return nil
+    }
+}
+
+
+extension MemeGeneratorApiClient: MemeGeneratorApiClientProtocol {
+    func generateMeme(_ topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
+        return try await generateMeme("1990s-First-World-Problems", topText: topText, bottomText: bottomText)
+    }
+    
+    func generateMeme(_ imageUrl: URL, topText: String, bottomText: String) async throws -> (data: UIImage, response: HTTPURLResponse) {
+        if let memeName = getMemeNameFromImageUrl(imageUrl) {
+            return try await generateMeme(memeName, topText: topText, bottomText: bottomText)
+        } else {
+            return try await generateMeme(topText, bottomText: bottomText)
+        }
     }
 }
