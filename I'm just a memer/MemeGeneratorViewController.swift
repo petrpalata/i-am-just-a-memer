@@ -15,7 +15,7 @@ class MemeGeneratorViewController: UIViewController {
     @IBOutlet weak var apiFetchIndicator: UIActivityIndicatorView?
 
     let apiClient = MemeGeneratorApiClient()
-
+    
     @IBAction func generateMemePressed() {
         let topText = topTextField?.text ?? ""
         let bottomText = bottomTextField?.text ?? ""
@@ -39,13 +39,23 @@ class MemeGeneratorViewController: UIViewController {
     }
     
     @IBAction func pickAMemePressed() {
-        let hostingViewController = UIHostingController(rootView: MemeTypePickerView())
+        let viewModel = MemeTypeViewModel()
+        viewModel.delegate = self
+        let hostingViewController = UIHostingController(
+            rootView: MemeTypePickerView(viewModel: viewModel)
+        )
         present(hostingViewController, animated: true)
     }
     
     private func toggleLoading() {
         apiFetchIndicator?.isHidden.toggle()
         memeImageView?.isHidden.toggle()
+    }
+}
+
+extension MemeGeneratorViewController: MemeTypeViewModelDelegate {
+    func didSelectMeme(_ meme: Meme?) {
+        presentedViewController?.dismiss(animated: true, completion: nil)
     }
 }
 

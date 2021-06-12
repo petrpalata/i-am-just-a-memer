@@ -12,5 +12,6 @@ struct Meme: Identifiable {
     var id = UUID()
     
     var image: UIImage?
+    var imageUrl: URL?
     var name: String
 }

@@ -9,16 +9,20 @@ import Foundation
 import SwiftUI
 
 struct MemeTypePickerView: View {
-    @State var loading: Bool = true
+    @ObservedObject var viewModel: MemeTypeViewModel
     var memes: [Meme] = []
     
     var body: some View {
-        if loading {
-            ProgressView()
-        } else {
-            List(memes) { meme in
-                Text(meme.name)
+        NavigationView {
+            if viewModel.loading {
+                ProgressView()
+            } else {
+                List(viewModel.memes) { meme in
+                    MemePickerRow(viewModel: viewModel, meme: meme)
+                }
             }
+        }.task {
+            await viewModel.fetchMemes()
         }
     }
 }
@@ -26,6 +30,7 @@ struct MemeTypePickerView: View {
 struct MemeTypePickerView_Previews: PreviewProvider {
     static var previews: some View {
         MemeTypePickerView(
+            viewModel: MemeTypeViewModel(),
             memes: [
                 Meme(image: nil, name: "Test meme 1"),
                 Meme(image: nil, name: "Test meme 2"),
