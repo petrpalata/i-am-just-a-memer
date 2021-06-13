@@ -25,23 +25,19 @@ class MemeTypeViewModel: ObservableObject {
         }
     }
     
-    let apiClient = MemeGeneratorApiClient()
+    let apiClient = MemeGeneratorJsonApiClient()
 
     func fetchMemes() async {
         loading = true
-        guard let response = try? await apiClient.generateMeme("", bottomText: "") else {
+        guard let memes = try? await apiClient.getMemes() else {
             loading = false
             return
         }
         
-        memes = [
-            Meme(image: nil,
-                 imageUrl: URL(string: "https://apimeme.com/meme?meme=1990s-First-World-Problems"),
-                 name: "1990 First World Problems"),
-            Meme(image: nil,
-                 imageUrl: URL(string: "https://apimeme.com/meme?meme=10-Guy"),
-                 name: "10 Guy")
-        ]
-        loading = false
+        self.memes = memes.map { imgFlip in
+            return Meme(image: nil, imageUrl: URL(string: imgFlip.url), name: imgFlip.name)
+        }
+    
+       loading = false
     }
 }
