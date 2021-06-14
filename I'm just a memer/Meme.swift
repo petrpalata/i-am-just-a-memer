@@ -10,6 +10,7 @@ import UIKit
 
 struct Meme: Identifiable {
     var id = UUID()
+    var backendId: String
     
     var image: UIImage?
     var imageUrl: URL?

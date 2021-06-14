@@ -4,10 +4,28 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>I'm just a memer.xcscheme_^#shared#^_</key>
+		<key>I'm just a memer.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>6A5591822673C1D0003888B7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6A5591982673C1D3003888B7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>6A5591A22673C1D3003888B7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>

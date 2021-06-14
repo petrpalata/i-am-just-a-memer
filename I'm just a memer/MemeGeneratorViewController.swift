@@ -15,8 +15,9 @@ class MemeGeneratorViewController: UIViewController {
     @IBOutlet weak var apiFetchIndicator: UIActivityIndicatorView?
     @IBOutlet weak var selectedMemeLabel: UILabel?
 
-    let apiClient: MemeGeneratorApiClientProtocol = MemeGeneratorApiClient()
-    
+    let apiClient: MemeGeneratorApiClientProtocol = ApiMemeClient()
+    let imgFlipApiClient = ImgFlipClient()
+
     var selectedMeme: Meme?
     
     @IBAction func generateMemePressed() {
@@ -51,9 +52,9 @@ class MemeGeneratorViewController: UIViewController {
         let topText = topTextField?.text ?? ""
         let bottomText = bottomTextField?.text ?? ""
         
-        if let selectedMeme = selectedMeme,
-           let imageUrl = selectedMeme.imageUrl {
-            return try await apiClient.generateMeme(imageUrl, topText: topText, bottomText: bottomText)
+        if let selectedMeme = selectedMeme {
+            let image = try await imgFlipApiClient.generateMeme(selectedMeme, captions: [topText, bottomText])
+            return (image, HTTPURLResponse())
         }
         return try await apiClient.generateMeme(topText, bottomText: bottomText)
     }

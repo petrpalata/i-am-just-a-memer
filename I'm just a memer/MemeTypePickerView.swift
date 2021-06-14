@@ -27,18 +27,18 @@ struct MemeTypePickerView: View {
     }
 }
 
-struct MemeTypePickerView_Previews: PreviewProvider {
-    static var previews: some View {
-        MemeTypePickerView(
-            viewModel: MemeTypeViewModel(),
-            memes: [
-                Meme(image: nil, name: "Test meme 1"),
-                Meme(image: nil, name: "Test meme 2"),
-                Meme(image: nil, name: "Test meme 3"),
-                Meme(image: nil, name: "Test meme 4"),
-                Meme(image: nil, name: "Test meme 5"),
-                Meme(image: nil, name: "Test meme 6")
-            ]
-        )
-    }
-}
+//struct MemeTypePickerView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        MemeTypePickerView(
+//            viewModel: MemeTypeViewModel(),
+//            memes: [
+//                Meme(image: nil, name: "Test meme 1"),
+//                Meme(image: nil, name: "Test meme 2"),
+//                Meme(image: nil, name: "Test meme 3"),
+//                Meme(image: nil, name: "Test meme 4"),
+//                Meme(image: nil, name: "Test meme 5"),
+//                Meme(image: nil, name: "Test meme 6")
+//            ]
+//        )
+//    }
+//}

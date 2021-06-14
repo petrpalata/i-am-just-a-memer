@@ -25,7 +25,7 @@ class MemeTypeViewModel: ObservableObject {
         }
     }
     
-    let apiClient = MemeGeneratorJsonApiClient()
+    let apiClient = ImgFlipClient()
 
     func fetchMemes() async {
         loading = true
@@ -35,7 +35,10 @@ class MemeTypeViewModel: ObservableObject {
         }
         
         self.memes = memes.map { imgFlip in
-            return Meme(image: nil, imageUrl: URL(string: imgFlip.url), name: imgFlip.name)
+            return Meme(backendId: imgFlip.id,
+                        image: nil,
+                        imageUrl: URL(string: imgFlip.url),
+                        name: imgFlip.name)
         }
     
        loading = false
