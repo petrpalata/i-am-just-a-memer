@@ -8,11 +8,14 @@
 import Foundation
 import UIKit
 
-struct Meme: Identifiable {
+struct Meme: Identifiable, Hashable {
     var id = UUID()
     var backendId: String
     
     var image: UIImage?
     var imageUrl: URL?
     var name: String
+    
+    var width: CGFloat
+    var height: CGFloat
 }

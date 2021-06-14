@@ -42,7 +42,7 @@ class MemeGeneratorViewController: UIViewController {
         let viewModel = MemeTypeViewModel()
         viewModel.delegate = self
         let hostingViewController = UIHostingController(
-            rootView: MemeTypePickerView(viewModel: viewModel)
+            rootView: MemeGallery(viewModel: viewModel)
         )
         present(hostingViewController, animated: true)
     }

@@ -13,7 +13,6 @@ protocol MemeTypeViewModelDelegate: AnyObject {
     func didSelectMeme(_ meme: Meme?)
 }
 
-@MainActor
 class MemeTypeViewModel: ObservableObject {
     @Published private(set) var memes: [Meme] = []
     @Published var loading: Bool = false
@@ -26,7 +25,7 @@ class MemeTypeViewModel: ObservableObject {
     }
     
     let apiClient = ImgFlipClient()
-
+    
     func fetchMemes() async {
         loading = true
         guard let memes = try? await apiClient.getMemes() else {
@@ -35,12 +34,16 @@ class MemeTypeViewModel: ObservableObject {
         }
         
         self.memes = memes.map { imgFlip in
-            return Meme(backendId: imgFlip.id,
-                        image: nil,
-                        imageUrl: URL(string: imgFlip.url),
-                        name: imgFlip.name)
+            return Meme(
+                backendId: imgFlip.id,
+                image: nil,
+                imageUrl: URL(string: imgFlip.url),
+                name: imgFlip.name,
+                width: CGFloat(imgFlip.width),
+                height: CGFloat(imgFlip.height)
+            )
         }
-    
-       loading = false
+        
+        loading = false
     }
 }
