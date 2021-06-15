@@ -14,6 +14,7 @@ class MemeDetailViewModel: ObservableObject {
     
     @Published var captionInputs: [String]
     @Published var memeImageStub: UIImage?
+    @Published var generatedMeme: UIImage?
     
     init(_ meme: Meme) {
         self.meme = meme
@@ -27,5 +28,12 @@ class MemeDetailViewModel: ObservableObject {
         let image = try await imgFlipApiClient.generateMeme(meme, captions: stubCaptions)
         memeImageStub = image
         return image
+    }
+    
+    func generateMeme() async throws {
+        memeImageStub = nil
+        generatedMeme = nil
+        let image = try await imgFlipApiClient.generateMeme(meme, captions: captionInputs)
+        generatedMeme = image
     }
 }

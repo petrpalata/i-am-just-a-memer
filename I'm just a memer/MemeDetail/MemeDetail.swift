@@ -13,8 +13,8 @@ struct MemeDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                if let imageStub = viewModel.memeImageStub {
-                    Image(uiImage: imageStub).resizable().aspectRatio(contentMode: .fit)
+                if let memeImage = viewModel.generatedMeme ?? viewModel.memeImageStub {
+                    Image(uiImage: memeImage).resizable().aspectRatio(contentMode: .fit)
                 } else {
                     ProgressView()
                 }
@@ -24,7 +24,9 @@ struct MemeDetail: View {
                         .textFieldStyle(.roundedBorder)
                 }
                 Button("Generate Meme") {
-                    //                viewModel.generateMeme()
+                    async {
+                        try? await viewModel.generateMeme()
+                    }
                 }
             }
         }
