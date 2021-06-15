@@ -18,4 +18,5 @@ struct Meme: Identifiable, Hashable {
     
     var width: CGFloat
     var height: CGFloat
+    var boxCount: Int
 }

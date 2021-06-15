@@ -40,7 +40,8 @@ class MemeTypeViewModel: ObservableObject {
                 imageUrl: URL(string: imgFlip.url),
                 name: imgFlip.name,
                 width: CGFloat(imgFlip.width),
-                height: CGFloat(imgFlip.height)
+                height: CGFloat(imgFlip.height),
+                boxCount: imgFlip.box_count
             )
         }
         
