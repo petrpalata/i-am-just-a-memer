@@ -29,7 +29,12 @@ struct MemeGallery: View {
             } else {
                 ScrollView(.vertical) {
                     LazyVGrid(columns: items) {
-                        ForEach(viewModel.memes, id: \.self) { meme in
+                        ForEach(viewModel.memes.filter {
+                            if searchText.count == 0 {
+                                return true
+                            }
+                            return $0.name.contains(searchText)
+                        },  id: \.self) { meme in
                             MemeGalleryCell(imageUrl: meme.imageUrl, width: meme.width, height: meme.height)
                         }
                     }
