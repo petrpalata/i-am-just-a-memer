@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6A55918B2673C1D0003888B7 /* MemeGeneratorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55918A2673C1D0003888B7 /* MemeGeneratorViewController.swift */; };
 		6A5591902673C1D3003888B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A55918F2673C1D3003888B7 /* Assets.xcassets */; };
 		6A55919E2673C1D3003888B7 /* I_m_just_a_memerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55919D2673C1D3003888B7 /* I_m_just_a_memerTests.swift */; };
 		6A5591A82673C1D3003888B7 /* I_m_just_a_memerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5591A72673C1D3003888B7 /* I_m_just_a_memerUITests.swift */; };
@@ -47,7 +46,6 @@
 
 /* Begin PBXFileReference section */
 		6A5591832673C1D0003888B7 /* I'm just a memer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I'm just a memer.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		6A55918A2673C1D0003888B7 /* MemeGeneratorViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeGeneratorViewController.swift; sourceTree = "<group>"; };
 		6A55918F2673C1D3003888B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6A5591992673C1D3003888B7 /* I'm just a memerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "I'm just a memerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6A55919D2673C1D3003888B7 /* I_m_just_a_memerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = I_m_just_a_memerTests.swift; sourceTree = "<group>"; };
@@ -123,7 +121,6 @@
 				6A5591C92677C515003888B7 /* MemeGallery */,
 				6A5591C62677B6F5003888B7 /* API */,
 				6A5591BC26751A5D003888B7 /* MemePickerRow.swift */,
-				6A55918A2673C1D0003888B7 /* MemeGeneratorViewController.swift */,
 				6A5591B62673D78B003888B7 /* MemeTypePickerView.swift */,
 				6A5591BA2673E2B4003888B7 /* MemeTypeViewModel.swift */,
 				6A5591B82673DED8003888B7 /* Meme.swift */,
@@ -332,7 +329,6 @@
 				6A55920326790929003888B7 /* MemeApp.swift in Sources */,
 				6A5591CB2677C52A003888B7 /* MemeGallery.swift in Sources */,
 				6A5591BF26752E34003888B7 /* ImgFlipClient.swift in Sources */,
-				6A55918B2673C1D0003888B7 /* MemeGeneratorViewController.swift in Sources */,
 				6A5591CD2677DBD6003888B7 /* MemeGalleryCell.swift in Sources */,
 				6A5591C1267666BC003888B7 /* MemeResponse.swift in Sources */,
 				6A5591B92673DED8003888B7 /* Meme.swift in Sources */,
