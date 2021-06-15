@@ -9,6 +9,7 @@ import SwiftUI
 
 struct MemeDetail: View {
     @StateObject var viewModel: MemeDetailViewModel
+    @State var showShareView: Bool = false
     
     var body: some View {
         ScrollView {
@@ -26,8 +27,13 @@ struct MemeDetail: View {
                 Button("Generate Meme") {
                     async {
                         try? await viewModel.generateMeme()
+                        showShareView = true
                     }
                 }
+            }
+            
+            if let generatedMeme = viewModel.generatedMeme {
+                NavigationLink(destination: ShareMemeView(memeImage: generatedMeme), isActive: $showShareView) {}
             }
         }
         .padding(8)
