@@ -15,25 +15,44 @@ class MemeDetailViewModel: ObservableObject {
     @Published var captionInputs: [String]
     @Published var memeImageStub: UIImage?
     @Published var generatedMeme: UIImage?
+    @Published var errorMessage: String?
+    @Published var errorPresent: Bool = false
     
     init(_ meme: Meme) {
         self.meme = meme
         self.captionInputs = Array(repeating: "", count: meme.boxCount)
     }
     
-    func generateStubMeme() async throws -> UIImage {
+    func generateStubMeme() async {
         let stubCaptions = (1...meme.boxCount).map { captionIndex in
             return "Caption \(captionIndex)"
         }
-        let image = try await imgFlipApiClient.generateMeme(meme, captions: stubCaptions)
-        memeImageStub = image
-        return image
+        
+        memeImageStub = await generateMeme(stubCaptions)
     }
     
-    func generateMeme() async throws {
+    func generateMeme() async {
+        generatedMeme = await generateMeme(captionInputs)
+    }
+    
+    private func generateMeme(_ captions: [String]) async -> UIImage? {
+        cleanState()
+        
+        do {
+            let image = try await imgFlipApiClient.generateMeme(meme, captions: captions)
+            return image
+        } catch {
+            errorMessage = "\(error)"
+            errorPresent = true
+            print(error)
+        }
+        return nil
+    }
+    
+    private func cleanState() {
         memeImageStub = nil
         generatedMeme = nil
-        let image = try await imgFlipApiClient.generateMeme(meme, captions: captionInputs)
-        generatedMeme = image
+        errorMessage = nil
+        errorPresent = false
     }
 }

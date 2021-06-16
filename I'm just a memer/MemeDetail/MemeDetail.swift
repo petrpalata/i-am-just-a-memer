@@ -26,7 +26,7 @@ struct MemeDetail: View {
                 }
                 Button("Generate Meme") {
                     async {
-                        try? await viewModel.generateMeme()
+                        await viewModel.generateMeme()
                         showShareView = true
                     }
                 }
@@ -39,9 +39,12 @@ struct MemeDetail: View {
         .padding(8)
         .navigationBarHidden(false)
         .navigationBarTitle(viewModel.meme.name)
+        .alert(isPresented: $viewModel.errorPresent) {
+            Alert(title: Text("API Error"), message: Text(viewModel.errorMessage!), dismissButton: .cancel())
+        }
         .onAppear {
             async {
-                try? await viewModel.generateStubMeme()
+                await viewModel.generateStubMeme()
             }
         }
     }

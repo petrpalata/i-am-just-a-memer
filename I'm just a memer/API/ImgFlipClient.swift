@@ -8,13 +8,33 @@
 import Foundation
 import UIKit
 
-enum ImgFlipClientError: Error {
+enum ImgFlipClientError: Error, CustomStringConvertible  {
     case invalidPayload
     case invalidBaseUrl
     case invalidResponseType
     case missingLoginData
     case invalidImageUrl
     case invalidQueryData
+    case imgFlipError(String)
+    
+    var description: String {
+        switch self {
+        case .invalidPayload:
+            return "Invalid input payload provided"
+        case .invalidBaseUrl:
+            return "Invalid base URL"
+        case .invalidResponseType:
+            return "Failed to parse response data"
+        case .missingLoginData:
+            return "Failed to retrieve login data from storage"
+        case .invalidImageUrl:
+            return "Invalid image URL returned from the API"
+        case .invalidQueryData:
+            return "Invalid query parameters provided"
+        case .imgFlipError(let backendError):
+            return "The API returned the following error: \(backendError)"
+        }
+    }
 }
 
 class ImgFlipClient {
@@ -73,7 +93,11 @@ class ImgFlipClient {
         print("Got response from getMeme API call: \(httpResponse), with code: \(httpResponse.statusCode), body: \(response.0)")
         let decoder = JSONDecoder()
         let generateMemeResponse = try decoder.decode(GenerateMemeResponse.self, from: response.0)
-        print(generateMemeResponse)
+        
+        if let backendError = generateMemeResponse.error_message {
+            throw ImgFlipClientError.imgFlipError(backendError)
+        }
+        
         guard let imgUrlString = generateMemeResponse.data?.url,
               let imgUrl = URL(string: imgUrlString) else {
             throw ImgFlipClientError.invalidImageUrl
