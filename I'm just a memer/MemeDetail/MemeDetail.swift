@@ -17,7 +17,7 @@ struct MemeDetail: View {
                 if let memeImage = viewModel.generatedMeme ?? viewModel.memeImageStub {
                     Image(uiImage: memeImage).resizable().aspectRatio(contentMode: .fit)
                 } else {
-                    ProgressView()
+                    MemePlaceholder(memeImageWidth: Int(viewModel.meme.width), memeImageHeight: Int(viewModel.meme.height))
                 }
                 ForEach(0..<viewModel.meme.boxCount, id: \.self) { index in
                     TextField("Caption \(index + 1)", text: $viewModel.captionInputs[index])

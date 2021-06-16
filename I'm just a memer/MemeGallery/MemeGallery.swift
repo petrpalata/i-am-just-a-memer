@@ -26,7 +26,9 @@ struct MemeGallery: View {
                     .padding(.horizontal, 10)
                 
                 if viewModel.loading {
+                    Spacer()
                     ProgressView()
+                    Spacer()
                 } else {
                     ScrollView(.vertical) {
                         LazyVGrid(columns: items) {

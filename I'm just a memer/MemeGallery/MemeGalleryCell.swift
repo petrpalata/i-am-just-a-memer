@@ -11,16 +11,19 @@ struct MemeGalleryCell: View {
     let imageUrl: URL?
     let width: CGFloat
     let height: CGFloat
-
+    
     var body: some View {
         VStack {
             AsyncImage(url: imageUrl) { image in
                 image.resizable()
                     .aspectRatio(contentMode: .fit)
             } placeholder: {
-                ProgressView().frame(width: 120, height: 120)
-//                    .frame(idealWidth: width, idealHeight: height)
+                MemePlaceholder(
+                    memeImageWidth: Int(width),
+                    memeImageHeight: Int(height)
+                )
             }
         }
     }
 }
+
