@@ -27,25 +27,36 @@ struct MemeDetail: View {
                 Button("Generate Meme") {
                     async {
                         await viewModel.generateMeme()
-                        showShareView = true
                     }
                 }
-            }
-            
-            if let generatedMeme = viewModel.generatedMeme {
-                NavigationLink(destination: ShareMemeView(memeImage: generatedMeme), isActive: $showShareView) {}
             }
         }
         .padding(8)
         .navigationBarHidden(false)
         .navigationBarTitle(viewModel.meme.name)
+        .navigationBarItems(trailing:
+            HStack {
+                shareButton
+            }
+        )
         .alert(isPresented: $viewModel.errorPresent) {
             Alert(title: Text("API Error"), message: Text(viewModel.errorMessage!), dismissButton: .cancel())
-        }
+        }.sheet(isPresented: $showShareView, content: {
+            ActivityViewController(activityItems: [viewModel.generatedMeme as Any])
+        })
         .onAppear {
             async {
                 await viewModel.generateStubMeme()
             }
         }
+    }
+                            
+    
+    var shareButton: some View {
+        Button(action: {
+            showShareView = true
+        }) {
+            Label("", systemImage: "square.and.arrow.up")
+        }.disabled(viewModel.generatedMeme == nil)
     }
 }

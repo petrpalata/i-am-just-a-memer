@@ -15,6 +15,7 @@ class MemeDetailViewModel: ObservableObject {
     @Published var captionInputs: [String]
     @Published var memeImageStub: UIImage?
     @Published var generatedMeme: UIImage?
+    @Published var hasGeneratedMeme: Bool = false
     @Published var errorMessage: String?
     @Published var errorPresent: Bool = false
     
@@ -33,6 +34,7 @@ class MemeDetailViewModel: ObservableObject {
     
     func generateMeme() async {
         generatedMeme = await generateMeme(captionInputs)
+        hasGeneratedMeme = true
     }
     
     private func generateMeme(_ captions: [String]) async -> UIImage? {
@@ -54,5 +56,6 @@ class MemeDetailViewModel: ObservableObject {
         generatedMeme = nil
         errorMessage = nil
         errorPresent = false
+        hasGeneratedMeme = false
     }
 }

@@ -24,6 +24,7 @@
 		6A55920826790E40003888B7 /* MemeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920726790E40003888B7 /* MemeDetailViewModel.swift */; };
 		6A55920B26791E1E003888B7 /* ShareMemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920A26791E1E003888B7 /* ShareMemeView.swift */; };
 		6A55920D267A7FFC003888B7 /* MemePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920C267A7FFC003888B7 /* MemePlaceholder.swift */; };
+		6A55920F267BADDF003888B7 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920E267BADDF003888B7 /* ActivityViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,6 +65,8 @@
 		6A55920726790E40003888B7 /* MemeDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeDetailViewModel.swift; sourceTree = "<group>"; };
 		6A55920A26791E1E003888B7 /* ShareMemeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareMemeView.swift; sourceTree = "<group>"; };
 		6A55920C267A7FFC003888B7 /* MemePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemePlaceholder.swift; sourceTree = "<group>"; };
+		6A55920E267BADDF003888B7 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
+		6A559210267BB1B1003888B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,7 @@
 				6A5591B82673DED8003888B7 /* Meme.swift */,
 				6A55918F2673C1D3003888B7 /* Assets.xcassets */,
 				6A55920226790929003888B7 /* MemeApp.swift */,
+				6A559210267BB1B1003888B7 /* Info.plist */,
 			);
 			path = "I'm just a memer";
 			sourceTree = "<group>";
@@ -185,6 +189,7 @@
 			isa = PBXGroup;
 			children = (
 				6A55920A26791E1E003888B7 /* ShareMemeView.swift */,
+				6A55920E267BADDF003888B7 /* ActivityViewController.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -331,6 +336,7 @@
 				6A55920626790BDA003888B7 /* MemeDetail.swift in Sources */,
 				6A55920826790E40003888B7 /* MemeDetailViewModel.swift in Sources */,
 				6A5591C52677B640003888B7 /* GenerateMemeResponse.swift in Sources */,
+				6A55920F267BADDF003888B7 /* ActivityViewController.swift in Sources */,
 				6A55920D267A7FFC003888B7 /* MemePlaceholder.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -418,6 +424,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -473,6 +480,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -491,6 +499,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "I'm just a memer/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This application uses the camera permission to save the generated meme to Photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -517,6 +527,8 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "I'm just a memer/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "This application uses the camera permission to save the generated meme to Photos.";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
