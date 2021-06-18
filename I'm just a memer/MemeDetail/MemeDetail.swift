@@ -15,23 +15,22 @@ struct MemeDetail: View {
         ScrollView {
             VStack {
                 if let memeImage = viewModel.generatedMeme ?? viewModel.memeImageStub {
-                    Image(uiImage: memeImage).resizable().aspectRatio(contentMode: .fit)
+                    Image(uiImage: memeImage).resizable().aspectRatio(contentMode: .fit).cornerRadius(5.0).shadow(radius: 2.0)
                 } else {
                     MemePlaceholder(memeImageWidth: Int(viewModel.meme.width), memeImageHeight: Int(viewModel.meme.height))
                 }
                 ForEach(0..<viewModel.meme.boxCount, id: \.self) { index in
-                    TextField("Caption \(index + 1)", text: $viewModel.captionInputs[index])
-                        .padding(8)
-                        .textFieldStyle(.roundedBorder)
+                    CaptionInputField(
+                        captionIndex: index,
+                        captionInput: $viewModel.captionInputs[index]
+                    )
                 }
-                Button("Generate Meme") {
-                    async {
-                        await viewModel.generateMeme()
-                    }
-                }
+                Button("Generate Meme", role: nil, action: {
+                    await viewModel.generateMeme()
+                })
             }
         }
-        .padding(8)
+        .padding(.horizontal, 20)
         .navigationBarHidden(false)
         .navigationBarTitle(viewModel.meme.name)
         .navigationBarItems(trailing:

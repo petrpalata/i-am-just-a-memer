@@ -23,7 +23,6 @@ struct MemeGallery: View {
                     .padding(.horizontal, 25)
                     .background(Color(.systemGray6))
                     .cornerRadius(8)
-                    .padding(.horizontal, 10)
                 
                 if viewModel.loading {
                     Spacer()
@@ -46,8 +45,10 @@ struct MemeGallery: View {
                     }
                 }
                 Spacer()
-            }.navigationBarTitle("")
-                .navigationBarHidden(true)
+            }
+            .padding(.horizontal, 10)
+            .navigationBarTitle("")
+            .navigationBarHidden(true)
         }
         .onAppear {
             async {

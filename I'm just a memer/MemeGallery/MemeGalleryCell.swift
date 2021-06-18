@@ -15,7 +15,7 @@ struct MemeGalleryCell: View {
     var body: some View {
         VStack {
             CachedAsyncImage(url: imageUrl) { image in
-                image
+                image.cornerRadius(10.0).shadow(radius: 2.0)
             } placeholder: {
                 MemePlaceholder(
                     memeImageWidth: Int(width),

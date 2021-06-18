@@ -27,6 +27,7 @@
 		6A55924E267CFCEA003888B7 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55924D267CFCEA003888B7 /* CachedAsyncImage.swift */; };
 		6A559250267CFDD0003888B7 /* CachedAsyncImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55924F267CFDCF003888B7 /* CachedAsyncImageViewModel.swift */; };
 		6A559252267D03EC003888B7 /* MemeCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A559251267D03EC003888B7 /* MemeCache.swift */; };
+		6A559254267D1E0F003888B7 /* CaptionInputField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A559253267D1E0F003888B7 /* CaptionInputField.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		6A55924D267CFCEA003888B7 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
 		6A55924F267CFDCF003888B7 /* CachedAsyncImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImageViewModel.swift; sourceTree = "<group>"; };
 		6A559251267D03EC003888B7 /* MemeCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemeCache.swift; sourceTree = "<group>"; };
+		6A559253267D1E0F003888B7 /* CaptionInputField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptionInputField.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 			isa = PBXGroup;
 			children = (
 				6A55920526790BDA003888B7 /* MemeDetail.swift */,
+				6A559253267D1E0F003888B7 /* CaptionInputField.swift */,
 				6A55920726790E40003888B7 /* MemeDetailViewModel.swift */,
 			);
 			path = MemeDetail;
@@ -339,6 +342,7 @@
 			files = (
 				6A5591C32677B5C7003888B7 /* GenerateMemeRequest.swift in Sources */,
 				6A5591BB2673E2B4003888B7 /* MemeTypeViewModel.swift in Sources */,
+				6A559254267D1E0F003888B7 /* CaptionInputField.swift in Sources */,
 				6A55920326790929003888B7 /* MemeApp.swift in Sources */,
 				6A5591CB2677C52A003888B7 /* MemeGallery.swift in Sources */,
 				6A559252267D03EC003888B7 /* MemeCache.swift in Sources */,
