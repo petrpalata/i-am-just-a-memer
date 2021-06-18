@@ -14,7 +14,7 @@ struct MemeGalleryCell: View {
     
     var body: some View {
         VStack {
-            AsyncImage(url: imageUrl) { image in
+            CachedAsyncImage(url: imageUrl) { image in
                 image.resizable()
                     .aspectRatio(contentMode: .fit)
             } placeholder: {
