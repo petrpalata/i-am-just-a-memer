@@ -25,6 +25,7 @@
 		6A55920D267A7FFC003888B7 /* MemePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920C267A7FFC003888B7 /* MemePlaceholder.swift */; };
 		6A55920F267BADDF003888B7 /* ActivityViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55920E267BADDF003888B7 /* ActivityViewController.swift */; };
 		6A55924E267CFCEA003888B7 /* CachedAsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55924D267CFCEA003888B7 /* CachedAsyncImage.swift */; };
+		6A559250267CFDD0003888B7 /* CachedAsyncImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A55924F267CFDCF003888B7 /* CachedAsyncImageViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +68,7 @@
 		6A55920E267BADDF003888B7 /* ActivityViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityViewController.swift; sourceTree = "<group>"; };
 		6A559210267BB1B1003888B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6A55924D267CFCEA003888B7 /* CachedAsyncImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImage.swift; sourceTree = "<group>"; };
+		6A55924F267CFDCF003888B7 /* CachedAsyncImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CachedAsyncImageViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				6A55924D267CFCEA003888B7 /* CachedAsyncImage.swift */,
+				6A55924F267CFDCF003888B7 /* CachedAsyncImageViewModel.swift */,
 			);
 			path = Caching;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				6A55920F267BADDF003888B7 /* ActivityViewController.swift in Sources */,
 				6A55924E267CFCEA003888B7 /* CachedAsyncImage.swift in Sources */,
 				6A55920D267A7FFC003888B7 /* MemePlaceholder.swift in Sources */,
+				6A559250267CFDD0003888B7 /* CachedAsyncImageViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

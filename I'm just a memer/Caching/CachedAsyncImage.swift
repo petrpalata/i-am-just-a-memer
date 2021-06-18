@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CachedAsyncImage<I: View, P: View>: View {
-    @State var image: UIImage?
+    @ObservedObject var viewModel = CachedAsyncImageViewModel()
     
     let content: (Image) -> I
     let placeholder: () -> P
@@ -25,28 +25,12 @@ struct CachedAsyncImage<I: View, P: View>: View {
     }
     
     var body: some View {
-        async {
-            guard let url = self.url else {
-                return
-            }
-            
-            do {
-                let session = URLSession.shared
-                let (imageData, _) = try await session.data(from: url, delegate: nil)
-                
-                guard let uiImage = UIImage(data: imageData) else {
-                    print("Failed to construct UIImage from image data")
-                    return
+        guard let image = viewModel.image else {
+            return AnyView(placeholder().onAppear(perform: {
+                async {
+                    await viewModel.fetchImage(url)
                 }
-                
-                image = uiImage
-            } catch {
-                print("Error \(error) happened when fetching url: \(url).")
-            }
-        }
-        
-        guard let image = self.image else {
-            return AnyView(placeholder())
+            }))
         }
         
         return AnyView(content(Image(uiImage: image)))
