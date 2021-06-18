@@ -39,9 +39,10 @@ enum ImgFlipClientError: Error, CustomStringConvertible  {
 
 class ImgFlipClient {
     let baseUrl = URLComponents(string: "https://api.imgflip.com")
-    
+    let session = URLSession.shared
+    let decoder = JSONDecoder()
+
     func getMemes() async throws -> [ImgFlipMeme] {
-        let session = URLSession.shared
         var targetUrlComponents = baseUrl
         targetUrlComponents?.path = "/get_memes"
         
@@ -60,7 +61,6 @@ class ImgFlipClient {
         
         print("Got response from getMeme API call: \(httpResponse), with code: \(httpResponse.statusCode), body: \(response.0)")
         do {
-            let decoder = JSONDecoder()
             let memes = try decoder.decode(MemeResponse.self, from: response.0)
             print(memes)
             return memes.data?["memes"] ?? []
@@ -91,7 +91,6 @@ class ImgFlipClient {
         }
         
         print("Got response from getMeme API call: \(httpResponse), with code: \(httpResponse.statusCode), body: \(response.0)")
-        let decoder = JSONDecoder()
         let generateMemeResponse = try decoder.decode(GenerateMemeResponse.self, from: response.0)
         
         if let backendError = generateMemeResponse.error_message {
