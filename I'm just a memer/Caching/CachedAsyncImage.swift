@@ -25,12 +25,20 @@ struct CachedAsyncImage<I: View, P: View>: View {
     }
     
     var body: some View {
+        makeView()
+    }
+    
+    private func makeView() -> some View {
         guard let image = viewModel.image else {
-            return AnyView(placeholder().onAppear(perform: {
-                async {
-                    await viewModel.fetchImage(url)
+            return AnyView(placeholder().background {
+                GeometryReader { proxy in
+                    Color.clear.onAppear {
+                        async {
+                            await viewModel.fetchImage(url, desiredSize: proxy.size)
+                        }
+                    }
                 }
-            }))
+            })
         }
         
         return AnyView(content(Image(uiImage: image)))
