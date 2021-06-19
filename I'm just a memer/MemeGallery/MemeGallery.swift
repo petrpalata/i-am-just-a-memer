@@ -29,20 +29,10 @@ struct MemeGallery: View {
                     ProgressView()
                     Spacer()
                 } else {
-                    ScrollView(.vertical) {
-                        LazyVGrid(columns: items) {
-                            ForEach(viewModel.memes.filter {
-                                if searchText.count == 0 {
-                                    return true
-                                }
-                                return $0.name.contains(searchText)
-                            },  id: \.self) { meme in
-                                NavigationLink(destination: MemeDetail(viewModel: MemeDetailViewModel(meme))) {
-                                    MemeGalleryCell(imageUrl: meme.imageUrl, width: meme.width, height: meme.height)
-                                }
-                            }
-                        }
-                    }
+                    MemeGalleryContent(
+                        memes: viewModel.memes,
+                        searchText: searchText
+                    )
                 }
                 Spacer()
             }
@@ -62,5 +52,56 @@ struct MemeGallery_Previews: PreviewProvider {
     static var previews: some View {
         MemeGallery(viewModel: MemeTypeViewModel())
             .previewInterfaceOrientation(.landscapeLeft)
+    }
+}
+
+struct MemeGalleryContent: View {
+    let memes: [Meme]
+    let searchText: String
+    
+    var body: some View {
+        ScrollView(.vertical) {
+            HStack(alignment: .top) {
+                LazyVStack {
+                    searchableMemesList(evenMemes)
+                }
+                LazyVStack {
+                    searchableMemesList(oddMemes)
+                }
+            }
+        }
+    }
+    
+    func searchableMemesList(_ memes: [Meme]) -> some View {
+        return ForEach(memes.filter {
+            if searchText.count == 0 {
+                return true
+            }
+            return $0.name.contains(searchText)
+        },  id: \.self) { meme in
+            NavigationLink(
+                destination: MemeDetail(viewModel: MemeDetailViewModel(meme))
+            ) {
+                MemeGalleryCell(
+                    imageUrl: meme.imageUrl,
+                    width: meme.width,
+                    height: meme.height
+                )
+            }
+        }
+    }
+    
+    var evenMemes: [Meme] {
+        return memes
+            .enumerated()
+            .filter { $0.offset % 2 == 0 }
+            .map { $0.element }
+    }
+    
+    var oddMemes: [Meme] {
+        return memes
+            .enumerated()
+            .filter { $0.offset % 2 != 0 }
+            .map { $0.element }
     }
 }
