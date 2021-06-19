@@ -25,9 +25,10 @@ struct MemeDetail: View {
                         captionInput: $viewModel.captionInputs[index]
                     )
                 }
-                Button("Generate Meme", role: nil, action: {
+                
+                GenerateMemeButton {
                     await viewModel.generateMeme()
-                })
+                }
             }
         }
         .padding(.horizontal, 20)
@@ -43,10 +44,8 @@ struct MemeDetail: View {
         }.sheet(isPresented: $showShareView, content: {
             ActivityViewController(activityItems: [viewModel.generatedMeme as Any])
         })
-        .onAppear {
-            async {
-                await viewModel.generateStubMeme()
-            }
+        .task {
+            await viewModel.generateStubMeme()
         }
     }
                             
