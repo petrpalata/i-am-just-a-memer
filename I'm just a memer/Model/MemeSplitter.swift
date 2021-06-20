@@ -50,7 +50,7 @@ class MemeSplitter {
                 }
                 let rightMeme = rightArray.remove(at: rightMemeIndex)
                 leftArray.append(rightMeme)
-            } else {
+            } else if leftHeight > rightHeight {
                 guard let leftMemeIndex = leftArray.closestToHeight(heightDistance) else {
                     return (leftArray, rightArray)
                 }
