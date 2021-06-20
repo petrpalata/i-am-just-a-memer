@@ -62,11 +62,12 @@ struct MemeGalleryContent: View {
     var body: some View {
         ScrollView(.vertical) {
             HStack(alignment: .top) {
+                let splitMemes = MemeSplitter().splitMemesBasedOnHeight(memes)
                 LazyVStack {
-                    searchableMemesList(evenMemes)
+                    searchableMemesList(splitMemes.0)
                 }
                 LazyVStack {
-                    searchableMemesList(oddMemes)
+                    searchableMemesList(splitMemes.1)
                 }
             }
         }
@@ -89,19 +90,5 @@ struct MemeGalleryContent: View {
                 )
             }
         }
-    }
-    
-    var evenMemes: [Meme] {
-        return memes
-            .enumerated()
-            .filter { $0.offset % 2 == 0 }
-            .map { $0.element }
-    }
-    
-    var oddMemes: [Meme] {
-        return memes
-            .enumerated()
-            .filter { $0.offset % 2 != 0 }
-            .map { $0.element }
     }
 }
