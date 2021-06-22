@@ -45,81 +45,64 @@ class MemeSplitterTests: XCTestCase {
     }
     
     func test_splitMemesBasedOnHeight_memeHeight2And2MemesHeight1_returnsCorrectlySplitArrays() throws {
+        let testMemes = generateMemesByHeight([1, 1, 2])
         
-        var memeWithHeight1 = generateMeme()
-        memeWithHeight1.height = 1
-        var memeWithHeight2 = generateMeme()
-        memeWithHeight2.height = 2
-        
-        let result = sut.splitMemesBasedOnHeight([
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight2
-        ])
-        
-        let leftArray = result.0
-        let rightArray = result.1
-        
-        XCTAssertTrue(checkArraySplitValidity(
-            leftArray,
-            rightArray: rightArray,
-            desiredHeights: (2, 2))
-        )
+        let result = sut.splitMemesBasedOnHeight(testMemes)
+
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (2, 2)))
     }
     
     func test_splitMemesBasedOnHeight_manyShortMemesOneTallMeme_returnCorrectlySplitArray() {
-        var memeWithHeight1 = generateMeme()
-        memeWithHeight1.height = 1
-        var memeWithHeight8 = generateMeme()
-        memeWithHeight8.height = 8
+        let testMemes = generateMemesByHeight([8, 1, 1, 1, 1, 1, 1, 1, 1])
         
-        let result = sut.splitMemesBasedOnHeight([
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight8
-        ])
+        let result = sut.splitMemesBasedOnHeight(testMemes)
         
-        let leftArray = result.0
-        let rightArray = result.1
-        
-        XCTAssertTrue(checkArraySplitValidity(
-            leftArray,
-            rightArray: rightArray,
-            desiredHeights: (8, 8))
-        )
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (8, 8)))
     }
     
     func test_splitMemesBasedOnHeight_oddSizes_returnCorrectlySplitArray() {
-        var memeWithHeight1 = generateMeme()
-        memeWithHeight1.height = 1
-        var memeWithHeight8 = generateMeme()
-        memeWithHeight8.height = 8
+        let testMemes = generateMemesByHeight([8, 1, 1, 1, 1, 1, 1, 1])
+                
+        let result = sut.splitMemesBasedOnHeight(testMemes)
+         
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (8, 7)))
+    }
+    
+    func test_splitMemesBasedOnHeight_columnWidthZero_returnCorrectlySplitArray() {
+        let testMemes = generateMemesByHeight([8, 1, 1, 1, 1, 1, 1, 1])
         
-        let result = sut.splitMemesBasedOnHeight([
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight1,
-            memeWithHeight8
-        ])
+        let result = sut.splitMemesBasedOnHeight(testMemes, columnWidth: 0)
+ 
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (8, 7)))
+    }
+    
+    func test_splitMemesBasedOnHeight_columnWidthLessThanZero_returnCorrectlySplitArray() {
+        let testMemes = generateMemesByHeight([8, 1, 1, 1, 1, 1, 1, 1])
         
-        let leftArray = result.0
-        let rightArray = result.1
+        let result = sut.splitMemesBasedOnHeight(testMemes, columnWidth: -1)
         
-        XCTAssertTrue(checkArraySplitValidity(
-            leftArray,
-            rightArray: rightArray,
-            desiredHeights: (8, 7))
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (8, 7)))
+    }
+    
+    
+    func test_splitMemesBasedOnHeight_columnWidthNonZero_returnCorrectlySplitArray() {
+        let testMemes = generateMemesByHeight(
+            [50, 50, 50, 50, 50],
+            widths: [50, 1, 1, 1, 1]
         )
+        let result = sut.splitMemesBasedOnHeight(testMemes, columnWidth: 1)
+        
+        XCTAssertTrue(checkArraySplitValidity(result, desiredHeights: (101, 100)))
+    }
+    
+    private func generateMemesByHeight(_ heights: [CGFloat], widths: [CGFloat]? = nil) -> [Meme] {
+        let widths = widths ?? heights.map({ _ in return 0 })
+        return zip(heights, widths).map { height, width in
+            var meme = generateMeme()
+            meme.width = width
+            meme.height = height
+            return meme
+        }
     }
     
     private func generateMeme() -> Meme {
@@ -133,12 +116,11 @@ class MemeSplitterTests: XCTestCase {
     }
     
     private func checkArraySplitValidity(
-        _ leftArray: [Meme],
-        rightArray: [Meme],
+        _ memeArrays: (leftArray: [Meme], rightArray: [Meme]),
         desiredHeights: (firstHeight: CGFloat, secondHeight: CGFloat)) -> Bool {
         
-        let leftHeight = leftArray.height()
-        let rightHeight = rightArray.height()
-        return (leftHeight.isEqual(to: desiredHeights.firstHeight) && rightHeight.isEqual(to: desiredHeights.secondHeight)) || (leftArray.height().isEqual(to: desiredHeights.secondHeight) && rightArray.height().isEqual(to: desiredHeights.firstHeight))
+        let leftHeight = memeArrays.leftArray.height()
+        let rightHeight = memeArrays.rightArray.height()
+        return (leftHeight.isEqual(to: desiredHeights.firstHeight) && rightHeight.isEqual(to: desiredHeights.secondHeight)) || (leftHeight.isEqual(to: desiredHeights.secondHeight) && rightHeight.isEqual(to: desiredHeights.firstHeight))
     }
 }

@@ -13,15 +13,20 @@ struct MemeGalleryContent: View {
     let memeSplitter = MemeSplitter()
     
     var body: some View {
-        ScrollView(.vertical) {
-            HStack(alignment: .top) {
-                let searchMemes = searchedMemes()
-                let splitMemes = memeSplitter.splitMemesBasedOnHeight(searchMemes)
-                let memeColumns = [splitMemes.0, splitMemes.1]
-                
-                ForEach(memeColumns, id: \.self) { memeColumn in
-                    LazyVStack {
-                        searchableMemesList(memeColumn)
+        GeometryReader { proxy in
+            ScrollView(.vertical) {
+                HStack(alignment: .top) {
+                    let searchMemes = searchedMemes()
+                    let splitMemes = memeSplitter.splitMemesBasedOnHeight(
+                        searchMemes,
+                        columnWidth: proxy.size.width/2
+                    )
+                    let memeColumns = [splitMemes.0, splitMemes.1]
+                    
+                    ForEach(memeColumns, id: \.self) { memeColumn in
+                        LazyVStack {
+                            searchableMemesList(memeColumn)
+                        }
                     }
                 }
             }

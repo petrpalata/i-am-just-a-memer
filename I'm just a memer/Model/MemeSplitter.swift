@@ -11,8 +11,9 @@ import UIKit
 class MemeSplitter {
     typealias MemeColumns = ([Meme], [Meme])
     
-    func splitMemesBasedOnHeight(_ memes: [Meme]) -> MemeColumns {
-        let (leftArray, rightArray) = splitToEvenAndOddIndices(memes)
+    func splitMemesBasedOnHeight(_ memes: [Meme], columnWidth: CGFloat? = nil ) -> MemeColumns {
+        let scaledMemes = scaleMemesWithRespectToWidth(memes, columnWidth: columnWidth)
+        let (leftArray, rightArray) = splitToEvenAndOddIndices(scaledMemes)
         return balanceArraysByMemeHeight(leftArray, rightArray: rightArray)
     }
     
@@ -63,6 +64,21 @@ class MemeSplitter {
         } while(abs(prevDistance - currentDistance) > 0.5)
         
         return (leftArray, rightArray)
+    }
+    
+    private func scaleMemesWithRespectToWidth(_ memes: [Meme], columnWidth: CGFloat?) -> [Meme] {
+        guard let columnWidth = columnWidth,
+              columnWidth > 0 else {
+            return memes
+        }
+        
+        return memes.map { meme in
+            var modifiedMeme = meme
+            let aspectRatio = meme.height / meme.width
+            modifiedMeme.width = columnWidth
+            modifiedMeme.height = columnWidth * aspectRatio
+            return modifiedMeme
+        }
     }
 }
 
