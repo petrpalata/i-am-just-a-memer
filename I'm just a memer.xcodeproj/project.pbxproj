@@ -10,7 +10,7 @@
 		6A21D979267E5BCF000D0A96 /* MemeSplitter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A21D978267E5BCF000D0A96 /* MemeSplitter.swift */; };
 		6A21D97B267E5C50000D0A96 /* MemeSplitterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A21D97A267E5C50000D0A96 /* MemeSplitterTests.swift */; };
 		6A21D97D267FBC4A000D0A96 /* MemeGalleryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A21D97C267FBC4A000D0A96 /* MemeGalleryContent.swift */; };
-		6A5591902673C1D3003888B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A55918F2673C1D3003888B7 /* Assets.xcassets */; };
+		6A21D97E2680F5BC000D0A96 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6A55918F2673C1D3003888B7 /* Assets.xcassets */; };
 		6A5591B52673C241003888B7 /* ApiMemeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5591B42673C241003888B7 /* ApiMemeClient.swift */; };
 		6A5591B92673DED8003888B7 /* Meme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5591B82673DED8003888B7 /* Meme.swift */; };
 		6A5591BB2673E2B4003888B7 /* MemeTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A5591BA2673E2B4003888B7 /* MemeTypeViewModel.swift */; };
@@ -293,7 +293,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6A5591902673C1D3003888B7 /* Assets.xcassets in Resources */,
+				6A21D97E2680F5BC000D0A96 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,6 +479,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -507,6 +508,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
