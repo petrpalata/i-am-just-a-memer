@@ -12,30 +12,28 @@ struct MemeGallery: View {
     @ObservedObject var viewModel: MemeTypeViewModel
     
     var body: some View {
-        NavigationView {
-            VStack {
-                TextField("Search ...", text: $searchText)
-                    .padding(7)
-                    .padding(.horizontal, 25)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
-                
-                if viewModel.loading {
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                } else {
-                    MemeGalleryContent(
-                        memes: viewModel.memes,
-                        searchText: searchText
-                    )
-                }
+        VStack {
+            TextField("Search ...", text: $searchText)
+                .padding(7)
+                .padding(.horizontal, 25)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+            
+            if viewModel.loading {
                 Spacer()
+                ProgressView()
+                Spacer()
+            } else {
+                MemeGalleryContent(
+                    memes: viewModel.memes,
+                    searchText: searchText
+                )
             }
-            .padding(.horizontal, 10)
-            .navigationBarTitle("")
-            .navigationBarHidden(true)
+            Spacer()
         }
+        .padding(.horizontal, 10)
+        .navigationBarTitle("")
+        .navigationBarHidden(true)
         .onAppear {
             async {
                 await viewModel.fetchMemes()

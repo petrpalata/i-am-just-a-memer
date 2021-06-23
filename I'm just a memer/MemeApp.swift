@@ -11,7 +11,20 @@ import SwiftUI
 struct MemeApp: App {
     var body: some Scene {
         WindowGroup {
-            MemeGallery(viewModel: MemeTypeViewModel())
+            TabView {
+                NavigationView {
+                    MemeGallery(viewModel: MemeTypeViewModel())
+                }.tabItem {
+                    Image(systemName: "wand.and.stars")
+                    Text("Create")
+                }
+                
+                SavedMemesView(viewModel: SavedMemesViewModel())
+                    .tabItem {
+                        Image(systemName: "star")
+                        Text("Saved")
+                    }
+            }
         }
     }
 }
