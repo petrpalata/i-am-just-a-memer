@@ -12,7 +12,7 @@ import UIKit
 class MemePhotoKitLoader {
     let imageManager = PHImageManager.default()
     
-    func loadAssetsFromPhotosLibrary() async throws -> [UIImage] {
+    func loadAssetsFromPhotosLibrary(_ preferredWidth: CGFloat? = nil) async throws -> [UIImage] {
         let mediaType = PHAssetMediaType.image
         let fetchResult = PHAsset.fetchAssets(with: mediaType, options: nil)
         var assets: [PHAsset] = []
@@ -21,29 +21,38 @@ class MemePhotoKitLoader {
         }
         
         let images = try await assets.asyncSequence().map { asset in
-            return await self.loadImageFromPHAsset(asset)
+            return await self.loadImageFromPHAsset(asset, preferredWidth: preferredWidth)
         }.compactArray()
         
         return images
     }
     
-    private func loadImageFromPHAsset(_ phAsset: PHAsset) async -> UIImage? {
+    private func loadImageFromPHAsset(_ phAsset: PHAsset, preferredWidth: CGFloat?) async -> UIImage? {
         return await withCheckedContinuation { c in
+            let targetSize = targetSizeFromPreferredWidth(preferredWidth, for: phAsset)
             let options = PHImageRequestOptions()
             options.isSynchronous = true
             options.deliveryMode = .highQualityFormat
-            imageManager.requestImageDataAndOrientation(
+            imageManager.requestImage(
                 for: phAsset,
-                   options: options) { data, _, _, _ in
-                guard let data = data else {
-                    c.resume(with: .success(nil))
-                    return
-                }
-                
-                let fetchedImage = UIImage(data: data)
-                c.resume(with: .success(fetchedImage))
+                   targetSize: targetSize,
+                   contentMode: .aspectFit,
+                   options: options) { image, _ in
+                c.resume(with: .success(image))
             }
         }
+    }
+    
+    private func targetSizeFromPreferredWidth(_ preferredWidth: CGFloat?, for phAsset: PHAsset) -> CGSize {
+        var targetSize = PHImageManagerMaximumSize
+        if let preferredWidth = preferredWidth {
+            let aspectRatio = CGFloat(phAsset.pixelHeight) / CGFloat(phAsset.pixelWidth)
+            targetSize = CGSize(
+                width: preferredWidth,
+                height: preferredWidth * aspectRatio
+            )
+        }
+        return targetSize
     }
 }
 

@@ -11,22 +11,24 @@ struct SavedMemesView: View {
     @ObservedObject var viewModel: SavedMemesViewModel
     
     var body: some View {
-        VStack {
-            if viewModel.loading {
-                Spacer()
-                ProgressView()
-                Spacer()
-            } else {
-                ScrollView {
-                    LazyVStack {
-                        ForEach(viewModel.savedMemes, id: \.self) { memeImage in
-                            Image(uiImage: memeImage).resizable().aspectRatio( contentMode: .fit)
+        GeometryReader { proxy in
+            VStack {
+                if viewModel.loading {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
+                } else {
+                    ScrollView {
+                        LazyVStack {
+                            ForEach(viewModel.savedMemes, id: \.self) { memeImage in
+                                Image(uiImage: memeImage)
+                            }
                         }
                     }
                 }
+            }.task {
+                try? viewModel.loadMemesFromStorage(proxy.size.width)
             }
-        }.task {
-            try? viewModel.loadMemesFromStorage()
         }
     }
 }
