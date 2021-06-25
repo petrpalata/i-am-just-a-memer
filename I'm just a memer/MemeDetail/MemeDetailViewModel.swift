@@ -11,6 +11,7 @@ class MemeDetailViewModel: ObservableObject {
     let meme: Meme
     
     let imgFlipApiClient = ImgFlipClient()
+    let saver = MemePhotoKitStorage()
     
     @Published var captionInputs: [String]
     @Published var memeImageStub: UIImage?
@@ -34,6 +35,9 @@ class MemeDetailViewModel: ObservableObject {
     
     func generateMeme() async {
         generatedMeme = await generateMeme(captionInputs)
+        if let generatedMeme = generatedMeme {
+            try? await saver.addMeme(generatedMeme)
+        }
         hasGeneratedMeme = true
     }
     

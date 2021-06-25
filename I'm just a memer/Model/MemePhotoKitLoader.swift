@@ -9,12 +9,17 @@ import Foundation
 import Photos
 import UIKit
 
+enum MemeLoaderError: Error {
+    case fetchRequestConstructionFailed
+}
+
 class MemePhotoKitLoader {
     let imageManager = PHImageManager.default()
     
-    func loadAssetsFromPhotosLibrary(_ preferredWidth: CGFloat? = nil) async throws -> [UIImage] {
-        let mediaType = PHAssetMediaType.image
-        let fetchResult = PHAsset.fetchAssets(with: mediaType, options: nil)
+    func loadAssetsFromPhotosLibrary(_ memeAssetCollection: PHAssetCollection, preferredWidth: CGFloat? = nil) async throws -> [UIImage] {
+        
+        let fetchResult = PHAsset.fetchAssets(in: memeAssetCollection, options: nil)
+        
         var assets: [PHAsset] = []
         fetchResult.enumerateObjects { asset, index, _ in
             assets.append(asset)

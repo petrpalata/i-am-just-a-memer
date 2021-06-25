@@ -14,11 +14,12 @@ class SavedMemesViewModel: ObservableObject {
     @Published var loading: Bool = true
     
     let imageLoader = MemePhotoKitLoader()
+    let memeStorage = MemePhotoKitStorage()
     
     func loadMemesFromStorage(_ preferedWidth: CGFloat?) throws {
         loading = true
         async {
-            let images = try await imageLoader.loadAssetsFromPhotosLibrary(preferedWidth)
+            let images = try await memeStorage.loadMemes(preferedWidth)
             await updateSavedImages(images)
         }
     }
