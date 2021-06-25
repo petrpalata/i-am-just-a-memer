@@ -12,53 +12,42 @@ import UIKit
 enum MemeStorageError: Error {
     case addMemeFailedToObtainPlaceholder
     case addMemeFailedCollectionChangeFailed
+    case memeCollectionMissing
 }
 
 class MemePhotoKitStorage {
     private let photoLibrary = PHPhotoLibrary.shared()
     private let userDefaults = UserDefaults.standard
-    private let memeCollectionLocalIdentifierKey = "memeCollectionIdentifier"
-    private let memeLoader = MemePhotoKitLoader()
     
-    func addMeme(_ meme: UIImage) async throws -> Bool {
-        var memeCollection: PHAssetCollection?
-        memeCollection = await memeAssetCollection()
-        if memeCollection == nil {
-           memeCollection = await createMemeLibrary()
+    private let memeCollectionLocalIdentifierKey = "memeCollectionIdentifier"
+    
+    private let memeLoader = MemePhotoKitLoader()
+    private let memeSaver = MemePhotoKitSaver()
+    
+    func addMeme(_ meme: UIImage) async throws {
+       guard let memeCollection = await memeCollection() else {
+            throw MemeStorageError.memeCollectionMissing
         }
         
-        guard let memeCollection = memeCollection else {
-            return false
-        }
-        
-        return try await withCheckedThrowingContinuation { c in
-            photoLibrary.performChanges {
-                let memeAssetCreateRequest = PHAssetChangeRequest.creationRequestForAsset(from: meme)
-                guard let memeAssetPlaceholder = memeAssetCreateRequest.placeholderForCreatedAsset else {
-                    c.resume(throwing: MemeStorageError.addMemeFailedToObtainPlaceholder)
-                    return
-                }
-                
-                
-                guard let addMemeToCollectionRequest = PHAssetCollectionChangeRequest(for: memeCollection) else {
-                    c.resume(throwing: MemeStorageError.addMemeFailedCollectionChangeFailed)
-                    return
-                }
-                
-                addMemeToCollectionRequest.addAssets([memeAssetPlaceholder] as NSFastEnumeration)
-            } completionHandler: { success, error in
-                c.resume(with: .success(success))
-            }
-        }
+        return try await memeSaver.addMeme(meme, to: memeCollection)
     }
     
     func loadMemes(_ desiredWidth: CGFloat? = nil) async throws -> [UIImage] {
-        guard let assetCollection = await memeAssetCollection() else {
+        guard let assetCollection = await existingMemeAssetCollection() else {
             return []
         }
         return try await memeLoader.loadAssetsFromPhotosLibrary(assetCollection, preferredWidth: desiredWidth)
     }
     
+    
+    private func memeCollection() async -> PHAssetCollection? {
+        let existingCollection = await existingMemeAssetCollection()
+        guard let existingCollection = existingCollection else {
+            return await createMemeLibrary()
+        }
+        return existingCollection
+    }
+   
     private func createMemeLibrary() async -> PHAssetCollection? {
         let success = await withCheckedContinuation { c in
             photoLibrary.performChanges {
@@ -70,12 +59,12 @@ class MemePhotoKitStorage {
             }
         }
         if success {
-            return await memeAssetCollection()
+            return await existingMemeAssetCollection()
         }
         return nil
     }
     
-    private func memeAssetCollection() async -> PHAssetCollection? {
+    private func existingMemeAssetCollection() async -> PHAssetCollection? {
         return await withCheckedContinuation { c in
             guard let identifier = userDefaults.string(forKey: memeCollectionLocalIdentifierKey) else {
                 c.resume(returning: nil)

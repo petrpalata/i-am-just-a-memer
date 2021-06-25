@@ -13,7 +13,6 @@ class SavedMemesViewModel: ObservableObject {
     @Published var savedMemes: [UIImage] = []
     @Published var loading: Bool = true
     
-    let imageLoader = MemePhotoKitLoader()
     let memeStorage = MemePhotoKitStorage()
     
     func loadMemesFromStorage(_ preferedWidth: CGFloat?) throws {
