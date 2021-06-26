@@ -35,10 +35,18 @@ class MemeDetailViewModel: ObservableObject {
     
     func generateMeme() async {
         generatedMeme = await generateMeme(captionInputs)
-        if let generatedMeme = generatedMeme {
-            try? await saver.addMeme(generatedMeme)
-        }
         hasGeneratedMeme = true
+    }
+    
+    func saveMemeToPhotos() async {
+        if let generatedMeme = generatedMeme {
+            do {
+                try await saver.addMeme(generatedMeme)
+            } catch {
+                errorMessage = "\(error)"
+                errorPresent = true
+            }
+        }
     }
     
     private func generateMeme(_ captions: [String]) async -> UIImage? {
