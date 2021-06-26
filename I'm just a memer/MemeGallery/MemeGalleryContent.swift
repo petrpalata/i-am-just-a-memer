@@ -28,7 +28,7 @@ struct MemeGalleryContent: View {
                             searchableMemesList(memeColumn)
                         }
                     }
-                }
+                }.padding(.horizontal, 10)
             }
         }
     }

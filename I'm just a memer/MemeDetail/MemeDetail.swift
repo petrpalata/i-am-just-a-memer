@@ -26,16 +26,15 @@ struct MemeDetail: View {
                     )
                 }
                 
-                GenerateMemeButton {
-                    await viewModel.generateMeme()
-                }
-            }
+                GenerateMemeButton { await viewModel.generateMeme() }
+                .padding(EdgeInsets(top: 0, leading: 0, bottom: 40, trailing: 0))
+            }.padding(.horizontal, 20)
         }
-        .padding(.horizontal, 20)
         .navigationBarHidden(false)
         .navigationBarTitle(viewModel.meme.name)
         .navigationBarItems(trailing:
             HStack {
+                saveMemeButton
                 shareButton
             }
         )
@@ -56,5 +55,16 @@ struct MemeDetail: View {
         }) {
             Label("", systemImage: "square.and.arrow.up")
         }.disabled(viewModel.generatedMeme == nil)
+    }
+    
+    var saveMemeButton: some View {
+        Button(action: {
+            async {
+                await viewModel.saveMemeToPhotos()
+            }
+        }) {
+            Label("", systemImage: "tray.and.arrow.down")
+        }
+        .disabled(viewModel.generatedMeme == nil)
     }
 }
