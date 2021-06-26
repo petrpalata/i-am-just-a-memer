@@ -11,13 +11,12 @@ struct GenerateMemeButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
-            .background(Color.blue)
+            .background(configuration.isPressed ? Color.memerButtonPressed : Color.memerButtonDefault)
             .foregroundColor(.white)
             .cornerRadius(10.0)
             .font(Font.title3.bold())
     }
 }
-
 
 struct GenerateMemeButton: View {
     let action: () async -> Void
