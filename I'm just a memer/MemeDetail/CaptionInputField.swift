@@ -7,13 +7,14 @@
 
 import SwiftUI
 
+
 struct CaptionInputField: View {
     let captionIndex: Int
     @Binding var captionInput: String
     
     var body: some View {
         TextField("Caption \(captionIndex + 1)", text: $captionInput)
-            .padding(.vertical, 20)
-            .textFieldStyle(.roundedBorder)
+            .textFieldStyle(CaptionInputFieldStyle())
+            .padding(.bottom, 10)
     }
 }

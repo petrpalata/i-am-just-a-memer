@@ -15,10 +15,19 @@ struct MemeDetail: View {
         ScrollView {
             VStack {
                 if let memeImage = viewModel.generatedMeme ?? viewModel.memeImageStub {
-                    Image(uiImage: memeImage).resizable().aspectRatio(contentMode: .fit).cornerRadius(5.0).shadow(radius: 2.0)
+                    Image(uiImage: memeImage)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(5.0)
+                        .shadow(radius: 2.0)
+                        .padding(.bottom, 10)
                 } else {
-                    MemePlaceholder(memeImageWidth: Int(viewModel.meme.width), memeImageHeight: Int(viewModel.meme.height))
+                    MemePlaceholder(
+                        memeImageWidth: Int(viewModel.meme.width),
+                        memeImageHeight: Int(viewModel.meme.height)
+                    ).padding(.bottom, 10)
                 }
+                
                 ForEach(0..<viewModel.meme.boxCount, id: \.self) { index in
                     CaptionInputField(
                         captionIndex: index,
@@ -27,7 +36,7 @@ struct MemeDetail: View {
                 }
                 
                 GenerateMemeButton { await viewModel.generateMeme() }
-                .padding(EdgeInsets(top: 0, leading: 0, bottom: 40, trailing: 0))
+                .padding(.bottom, 40)
             }.padding(.horizontal, 20)
         }
         .navigationBarHidden(false)
