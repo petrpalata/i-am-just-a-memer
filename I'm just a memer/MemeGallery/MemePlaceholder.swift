@@ -10,8 +10,8 @@ import SwiftUI
 struct MemePlaceholder: View {
     @State var animationRunning: Bool = false
     
-    let memeImageWidth: Int
-    let memeImageHeight: Int
+    let memeImageWidth: CGFloat
+    let memeImageHeight: CGFloat
     
     var body: some View {
         ZStack {

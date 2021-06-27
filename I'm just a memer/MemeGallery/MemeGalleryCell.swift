@@ -18,8 +18,8 @@ struct MemeGalleryCell: View {
                 image.cornerRadius(10.0).shadow(radius: 2.0)
             } placeholder: {
                 MemePlaceholder(
-                    memeImageWidth: Int(width),
-                    memeImageHeight: Int(height)
+                    memeImageWidth: width,
+                    memeImageHeight: height
                 )
             }
         }

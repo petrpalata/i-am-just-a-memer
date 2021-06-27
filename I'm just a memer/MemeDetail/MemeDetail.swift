@@ -14,19 +14,11 @@ struct MemeDetail: View {
     var body: some View {
         ScrollView {
             VStack {
-                if let memeImage = viewModel.generatedMeme ?? viewModel.memeImageStub {
-                    Image(uiImage: memeImage)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .cornerRadius(5.0)
-                        .shadow(radius: 2.0)
-                        .padding(.bottom, 10)
-                } else {
-                    MemePlaceholder(
-                        memeImageWidth: Int(viewModel.meme.width),
-                        memeImageHeight: Int(viewModel.meme.height)
-                    ).padding(.bottom, 10)
-                }
+                StaticImageWithAnimatedPlaceholder(image: viewModel.displayableMeme,
+                                                   placeholderWidth: viewModel.meme.width,
+                                                   placeholderHeight: viewModel.meme.height)
+                    .padding(.bottom, 10)
+                    .frame(maxHeight: 300)
                 
                 ForEach(0..<viewModel.meme.boxCount, id: \.self) { index in
                     CaptionInputField(
@@ -36,27 +28,30 @@ struct MemeDetail: View {
                 }
                 
                 GenerateMemeButton { await viewModel.generateMeme() }
+                
                 .padding(.bottom, 40)
             }.padding(.horizontal, 20)
         }
         .navigationBarHidden(false)
         .navigationBarTitle(viewModel.meme.name)
         .navigationBarItems(trailing:
-            HStack {
-                saveMemeButton
-                shareButton
-            }
+                                HStack {
+            saveMemeButton
+            shareButton
+        }
         )
         .alert(isPresented: $viewModel.errorPresent) {
-            Alert(title: Text("API Error"), message: Text(viewModel.errorMessage!), dismissButton: .cancel())
-        }.sheet(isPresented: $showShareView, content: {
+            Alert(title: Text("Error"), message: Text(viewModel.errorMessage!), dismissButton: .cancel())
+        }
+        .sheet(isPresented: $showShareView, content: {
             ActivityViewController(activityItems: [viewModel.generatedMeme as Any])
         })
         .task {
             await viewModel.generateStubMeme()
         }
+        
     }
-                            
+    
     
     var shareButton: some View {
         Button(action: {
@@ -67,13 +62,8 @@ struct MemeDetail: View {
     }
     
     var saveMemeButton: some View {
-        Button(action: {
-            async {
-                await viewModel.saveMemeToPhotos()
-            }
-        }) {
-            Label("", systemImage: "tray.and.arrow.down")
-        }
-        .disabled(viewModel.generatedMeme == nil)
+        SaveMemeButton(viewModel: SaveMemeButtonViewModel(viewModel))
+            .disabled(viewModel.generatedMeme == nil)
     }
 }
+

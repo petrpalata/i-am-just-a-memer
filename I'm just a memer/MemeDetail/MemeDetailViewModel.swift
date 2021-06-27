@@ -10,45 +10,42 @@ import SwiftUI
 class MemeDetailViewModel: ObservableObject {
     let meme: Meme
     
-    let imgFlipApiClient = ImgFlipClient()
-    let saver = MemePhotoKitStorage()
+    private let imgFlipApiClient = ImgFlipClient()
+    private let saver = MemePhotoKitStorage()
+    
+    private var memeImageStub: UIImage?
     
     @Published var captionInputs: [String]
-    @Published var memeImageStub: UIImage?
     @Published var generatedMeme: UIImage?
     @Published var hasGeneratedMeme: Bool = false
     @Published var errorMessage: String?
     @Published var errorPresent: Bool = false
-    
+    @Published var displayableMeme: UIImage?
+    @Published var showSaveConfirmation: Bool = false
+
     init(_ meme: Meme) {
         self.meme = meme
         self.captionInputs = Array(repeating: "", count: meme.boxCount)
     }
     
     func generateStubMeme() async {
-        let stubCaptions = (1...meme.boxCount).map { captionIndex in
-            return "Caption \(captionIndex)"
+        if !hasGeneratedMeme {
+            let stubCaptions = (1...meme.boxCount).map { captionIndex in
+                return "Caption \(captionIndex)"
+            }
+            
+            memeImageStub = await generateMeme(stubCaptions)
+            displayableMeme = memeImageStub
         }
-        
-        memeImageStub = await generateMeme(stubCaptions)
     }
     
     func generateMeme() async {
         generatedMeme = await generateMeme(captionInputs)
+        displayableMeme = generatedMeme
         hasGeneratedMeme = true
     }
     
-    func saveMemeToPhotos() async {
-        if let generatedMeme = generatedMeme {
-            do {
-                try await saver.addMeme(generatedMeme)
-            } catch {
-                errorMessage = "\(error)"
-                errorPresent = true
-            }
-        }
-    }
-    
+        
     private func generateMeme(_ captions: [String]) async -> UIImage? {
         cleanState()
         
@@ -66,6 +63,7 @@ class MemeDetailViewModel: ObservableObject {
     private func cleanState() {
         memeImageStub = nil
         generatedMeme = nil
+        displayableMeme = nil
         errorMessage = nil
         errorPresent = false
         hasGeneratedMeme = false
