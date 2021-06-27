@@ -14,6 +14,9 @@ private enum MemerColors: String {
     case darkCyan = "MemerDarkCyan"
     case buttonPressed = "MemerButtonPressed"
     
+    case cancel = "MemerCancel"
+    case cancelPressed = "MemerCancelButtonPressed"
+
     var color: Color? {
         Color(named: rawValue)
     }
@@ -25,4 +28,6 @@ extension Color {
     static var memerDarkCyan: Color? { MemerColors.darkCyan.color }
     static var memerButtonDefault: Color? { memerDarkCyan }
     static var memerButtonPressed: Color? { MemerColors.buttonPressed.color }
+    static var memerCancel: Color? { MemerColors.cancel.color }
+    static var memerCancelButtonPressed: Color? { MemerColors.cancelPressed.color }
 }

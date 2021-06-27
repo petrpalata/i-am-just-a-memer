@@ -1,5 +1,5 @@
 //
-//  GenerateMemeButtonStyle.swift
+//  MemerButtonStyle.swift
 //  I'm just a memer
 //
 //  Created by Petr Palata on 18.06.2021.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GenerateMemeButtonStyle: ButtonStyle {
+struct MemerButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .padding()
@@ -18,12 +18,3 @@ struct GenerateMemeButtonStyle: ButtonStyle {
     }
 }
 
-struct GenerateMemeButton: View {
-    let action: () async -> Void
-    
-    var body: some View {
-        Button(role: nil, action: action) {
-            Label("Generate Meme", systemImage: "wand.and.stars")
-        }.buttonStyle(GenerateMemeButtonStyle())
-    }
-}
