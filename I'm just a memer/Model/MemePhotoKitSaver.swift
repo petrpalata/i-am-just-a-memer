@@ -32,6 +32,15 @@ class MemePhotoKitSaver {
                 c.resume(with: .success(()))
             }
         }
-        
+    }
+    
+    func deleteMeme(_ asset: PHAsset) async throws -> Bool {
+        return await withCheckedContinuation { c in
+            photoLibrary.performChanges {
+                PHAssetChangeRequest.deleteAssets([asset] as NSFastEnumeration)
+            } completionHandler: { success, error in
+                c.resume(with: .success(success))
+            }
+        }
     }
 }

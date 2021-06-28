@@ -33,13 +33,7 @@ class MemePhotoKitStorage {
     }
     
     func deleteMeme(_ asset: PHAsset) async throws -> Bool {
-        return await withCheckedContinuation { c in
-            photoLibrary.performChanges {
-                PHAssetChangeRequest.deleteAssets([asset] as NSFastEnumeration)
-            } completionHandler: { success, error in
-                c.resume(with: .success(success))
-            }
-        }
+        return try await memeSaver.deleteMeme(asset)
     }
     
     func loadMemes(_ desiredWidth: CGFloat? = nil) async throws -> [(PHAsset, UIImage)] {

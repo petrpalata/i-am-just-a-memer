@@ -9,8 +9,9 @@ import SwiftUI
 import UIKit
 import Photos
 
+
 class SavedMemesViewModel: ObservableObject {
-    @Published var savedMemes: [(PHAsset, UIImage)] = []
+    @Published var loadedMemes: [LoadedMeme] = []
     @Published var loading: Bool = true
     @Published var editing: Bool = false
     
@@ -19,19 +20,18 @@ class SavedMemesViewModel: ObservableObject {
     func loadMemesFromStorage(_ preferedWidth: CGFloat?) throws {
         loading = true
         async {
-            let images = try await memeStorage.loadMemes(preferedWidth)
-            await updateSavedImages(images)
+            let memeTuples = try await memeStorage.loadMemes(preferedWidth)
+            let loadedMemes = memeTuples.map { LoadedMeme(asset: $0.0, image: $0.1) }
+            await updateLoadedMemes(loadedMemes)
         }
     }
     
-    func deleteMeme(_ asset: PHAsset) {
+    func deleteMeme(_ memeToDelete: LoadedMeme) {
         async {
             do {
-                if try await memeStorage.deleteMeme(asset) {
-                    let filteredMemes = savedMemes.filter({ memeTuple in
-                        return memeTuple.0.localIdentifier != asset.localIdentifier
-                    })
-                    await updateSavedImages(filteredMemes)
+                if try await memeStorage.deleteMeme(memeToDelete.asset) {
+                    let filteredMemes = loadedMemes.filter { $0 != memeToDelete }
+                    await updateLoadedMemes(filteredMemes)
                 }
             } catch {
                 print(error)
@@ -39,8 +39,8 @@ class SavedMemesViewModel: ObservableObject {
         }
     }
     
-    @MainActor private func updateSavedImages(_ images: [(PHAsset, UIImage)]) {
-        savedMemes = images
+    @MainActor private func updateLoadedMemes(_ memes: [LoadedMeme]) {
+        loadedMemes = memes
         loading = false
     }
 }

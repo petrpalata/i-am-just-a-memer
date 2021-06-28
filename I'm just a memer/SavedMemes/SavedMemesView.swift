@@ -23,16 +23,16 @@ struct SavedMemesView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: items, spacing: 2) {
-                            ForEach(viewModel.savedMemes, id: \.self.0.localIdentifier) { memeTuple in
+                            ForEach(viewModel.loadedMemes, id: \.self) { loadedMeme in
                                 GeometryReader { proxy in
-                                    Image(uiImage: memeTuple.1)
+                                    Image(uiImage: loadedMeme.image)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(height: proxy.size.width, alignment: .center)
                                         .position(x: proxy.frame(in: .local).midX, y: proxy.frame(in: .local).midY)
                                         .overlay(
                                             Button(action: {
-                                            viewModel.deleteMeme(memeTuple.0)
+                                            viewModel.deleteMeme(loadedMeme)
                                             }) {
                                                 VStack {
                                                     Image(systemName: "trash")
