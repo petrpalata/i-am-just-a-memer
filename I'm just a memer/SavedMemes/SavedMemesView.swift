@@ -24,31 +24,7 @@ struct SavedMemesView: View {
                     ScrollView {
                         LazyVGrid(columns: items, spacing: 2) {
                             ForEach(viewModel.loadedMemes, id: \.self) { loadedMeme in
-                                GeometryReader { proxy in
-                                    Image(uiImage: loadedMeme.image)
-                                        .resizable()
-                                        .scaledToFill()
-                                        .frame(height: proxy.size.width, alignment: .center)
-                                        .position(x: proxy.frame(in: .local).midX, y: proxy.frame(in: .local).midY)
-                                        .overlay(
-                                            Button(action: {
-                                            viewModel.deleteMeme(loadedMeme)
-                                            }) {
-                                                VStack {
-                                                    Image(systemName: "trash")
-                                                        .resizable()
-                                                        .frame(width: 20, height: 20, alignment: .center)
-                                                        .padding(10)
-                                                }
-                                                .background(Color.white)
-                                                .clipShape(Circle())
-                                                .shadow(radius: 5)
-                                            }.opacity(viewModel.editing ? 1 : 0)
-                                        )
-
-                                }
-                                .clipped()
-                                .aspectRatio(1, contentMode: .fit)
+                                LoadedMemeView(meme: loadedMeme, savedMemesViewModel: viewModel)
                             }
                             .clipped()
                             .aspectRatio(1, contentMode: .fit)
@@ -70,3 +46,4 @@ struct SavedMemesView_Previews: PreviewProvider {
         SavedMemesView(viewModel: SavedMemesViewModel())
     }
 }
+
