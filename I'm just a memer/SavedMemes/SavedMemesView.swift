@@ -9,19 +9,31 @@ import SwiftUI
 
 struct SavedMemesView: View {
     @ObservedObject var viewModel: SavedMemesViewModel
+    var items: [GridItem] = Array(repeating: .init(.adaptive(minimum: 120), spacing: 2), count: 3)
     
     var body: some View {
         GeometryReader { proxy in
             VStack {
                 if viewModel.loading {
-                    Spacer()
                     ProgressView()
-                    Spacer()
+                        .position(
+                            x: proxy.frame(in: .local).midX,
+                            y: proxy.frame(in: .local).midY
+                        )
                 } else {
                     ScrollView {
-                        LazyVStack {
+                        LazyVGrid(columns: items, spacing: 2) {
                             ForEach(viewModel.savedMemes, id: \.self) { memeImage in
-                                Image(uiImage: memeImage)
+                                GeometryReader { proxy in
+                                    Image(uiImage: memeImage)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(height: proxy.size.width, alignment: .center)
+                                        .position(x: proxy.frame(in: .local).midX, y: proxy.frame(in: .local).midY)
+
+                                }
+                                .clipped()
+                                .aspectRatio(1, contentMode: .fit)
                             }
                         }
                     }
