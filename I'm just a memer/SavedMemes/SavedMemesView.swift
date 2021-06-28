@@ -23,22 +23,42 @@ struct SavedMemesView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: items, spacing: 2) {
-                            ForEach(viewModel.savedMemes, id: \.self) { memeImage in
+                            ForEach(viewModel.savedMemes, id: \.self.0.localIdentifier) { memeTuple in
                                 GeometryReader { proxy in
-                                    Image(uiImage: memeImage)
+                                    Image(uiImage: memeTuple.1)
                                         .resizable()
                                         .scaledToFill()
                                         .frame(height: proxy.size.width, alignment: .center)
                                         .position(x: proxy.frame(in: .local).midX, y: proxy.frame(in: .local).midY)
+                                        .overlay(
+                                            Button(action: {
+                                            viewModel.deleteMeme(memeTuple.0)
+                                            }) {
+                                                VStack {
+                                                    Image(systemName: "trash")
+                                                        .resizable()
+                                                        .frame(width: 20, height: 20, alignment: .center)
+                                                        .padding(10)
+                                                }
+                                                .background(Color.white)
+                                                .clipShape(Circle())
+                                                .shadow(radius: 5)
+                                            }.opacity(viewModel.editing ? 1 : 0)
+                                        )
 
                                 }
                                 .clipped()
                                 .aspectRatio(1, contentMode: .fit)
                             }
+                            .clipped()
+                            .aspectRatio(1, contentMode: .fit)
                         }
                     }
                 }
-            }.task {
+            }
+            .navigationBarTitle("Saved Memes")
+            .navigationBarItems(trailing: Button(viewModel.editing ? "Done" : "Edit", action: { viewModel.editing.toggle() }))
+            .task {
                 try? viewModel.loadMemesFromStorage(proxy.size.width)
             }
         }

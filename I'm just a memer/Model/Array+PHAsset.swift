@@ -49,3 +49,12 @@ extension AsyncMapSequence where Element == UIImage? {
         })
     }
 }
+extension AsyncMapSequence where Element == (PHAsset, UIImage?) {
+    func compactArray() async throws -> [(PHAsset, UIImage)] {
+        return try await reduce(into: [], { acc, elem in
+            if let image = elem.1 {
+                acc.append((elem.0, image))
+            }
+        })
+    }
+}

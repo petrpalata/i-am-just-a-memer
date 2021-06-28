@@ -19,11 +19,13 @@ struct MemeApp: App {
                     Text("Create")
                 }
                 
-                SavedMemesView(viewModel: SavedMemesViewModel())
-                    .tabItem {
-                        Image(systemName: "star")
-                        Text("Saved")
-                    }
+                NavigationView {
+                    SavedMemesView(viewModel: SavedMemesViewModel())
+                }.tabItem {
+                    Image(systemName: "star")
+                    Text("Saved")
+                }
+                
             }
         }
     }

@@ -16,7 +16,7 @@ enum MemeLoaderError: Error {
 class MemePhotoKitLoader {
     let imageManager = PHImageManager.default()
     
-    func loadAssetsFromPhotosLibrary(_ memeAssetCollection: PHAssetCollection, preferredWidth: CGFloat? = nil) async throws -> [UIImage] {
+    func loadAssetsFromPhotosLibrary(_ memeAssetCollection: PHAssetCollection, preferredWidth: CGFloat? = nil) async throws -> [(PHAsset, UIImage)] {
         
         let fetchResult = PHAsset.fetchAssets(in: memeAssetCollection, options: nil)
         
@@ -25,8 +25,9 @@ class MemePhotoKitLoader {
             assets.append(asset)
         }
         
-        let images = try await assets.asyncSequence().map { asset in
-            return await self.loadImageFromPHAsset(asset, preferredWidth: preferredWidth)
+        let images = try await assets.asyncSequence().map { asset -> (PHAsset, UIImage?) in
+            let image = await self.loadImageFromPHAsset(asset, preferredWidth: preferredWidth)
+            return (asset, image)
         }.compactArray()
         
         return images
